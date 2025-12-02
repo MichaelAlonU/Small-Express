@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Names</title>
+
+    <style>
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #names-box {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+            min-width: 280px;
+        }
+
+        .name {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+        }
+
+        .name:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Names List</h1>
+
+    <div id="names-box">Loading...</div>
+
+    <script>
+        async function loadNames() {
+            const box = document.getElementById("names-box");
+
+            try {
+                const res = await fetch("http://localhost:3000/");
+                const names = await res.json();
+
+                box.innerHTML = names
+                    .map(name => `<div class="name">${name}</div>`)
+                    .join("");
+            } catch (e) {
+                box.innerHTML = "Failed to load names.";
+            }
+        }
+
+        loadNames();
+    </script>
+
+</body>
+</html>
